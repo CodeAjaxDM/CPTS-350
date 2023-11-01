@@ -1,0 +1,35 @@
+def find_combinations(n, current_combination, all_combinations):
+    if n == 0:
+        all_combinations.append(list(current_combination))
+    elif n > 0:
+        for num in [1, 2, 3]:
+            # recursively find all combos that start with value 1 2 or 3 representing str length 
+            # on strings 0, 11, 101
+            current_combination.append(num)
+            find_combinations(n - num, current_combination, all_combinations)
+            current_combination.pop()
+
+def get_combinations(n):
+    all_combinations = []
+    find_combinations(n, [], all_combinations)
+    return all_combinations
+
+def find_all_combinations(n):
+    count = 0
+    k = 0 # loop counter effecting permutations on 1101 cycle.
+    if n == 0:
+        # base case null string is valid combo
+        return 1
+    else:
+        # after permuting 1101 cycle, we can sum remaining values in this many ways
+        while(n-4 >= 0):
+            n = n-4 
+            k += 1
+            combinations = get_combinations(n)
+            count += (len(combinations) * k) # we can place these combinations in any of k places in the permutation of 1101
+    
+    return count
+
+# Example usage:
+n = 13
+print(find_all_combinations(n))
